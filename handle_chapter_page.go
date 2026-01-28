@@ -16,6 +16,7 @@ func handleChapterPage(prefix, url string, errChan chan<- error, fileChan chan *
 	}
 
 	imgs := queryAll(mainNode, "main > article > div > div > p img")
+	// imgs := queryAll(mainNode, "main > article > div > div > div > a img")
 
 	for pageNum, page := range imgs {
 		for _, attr := range page.Attr {

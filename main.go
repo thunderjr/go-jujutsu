@@ -2,13 +2,16 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"math"
 	"strings"
 	"sync"
 	"time"
 )
 
-const URL = "https://ww7.jujmanga.com/"
+const URL = "https://w40.jujmanga.com/"
+
+// const URL = "https://sousounofrieren-chapters.online/"
 
 func main() {
 	wg := &sync.WaitGroup{}
@@ -33,6 +36,8 @@ func main() {
 		return
 	}
 
+	log.Println("chapterLinks", len(chapterLinks))
+
 	for i, link := range chapterLinks {
 		for _, attr := range link.Attr {
 			if attr.Key == "href" {
@@ -40,6 +45,15 @@ func main() {
 				chapter := linkChunks[len(linkChunks)-1]
 
 				fileName := fmt.Sprintf("./output/%s", chapter)
+
+				// intChapter, err := strconv.Atoi(chapter)
+				// if err != nil {
+				// 	errChan <- fmt.Errorf("chapter (%s) is not a number", chapter)
+				// }
+
+				// if intChapter <= 247 {
+				// 	continue
+				// }
 
 				wg.Add(1)
 				go handleChapterPage(fileName, attr.Val, errChan, fileChan, wg)
